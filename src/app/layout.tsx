@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Anek_Bangla } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
+import Navbar from "@/Component/Navbar";
+import Footer from "@/Component/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const anekBangla = Anek_Bangla({
+  subsets: ["latin", "bengali"],
+   weight: ['300', '400', '500', '600', '700'], 
+  style: ['normal'],
+  display: 'swap',
+  variable: '--font-anek-bangla',
 });
 
 export const metadata: Metadata = {
@@ -22,10 +22,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${anekBangla.className} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}
+      <body className="min-h-full flex flex-col max-w-7xl mx-auto">
+        <Navbar />
+         {children}
          <ToastContainer />
+         <Footer />
       </body>
     </html>
   );
