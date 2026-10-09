@@ -4,15 +4,14 @@ import "react-marquee-text/dist/styles.css"
 
 const Marquee = async() => {
     const response = await fetch("https://api.api-store.workers.dev/api/bazardor/products")
-    const data = await response.json()
-    console.log(data);
+    const data = await response.json();
     return (
         <div>
             <MarqueeText direction="right" duration={10}>
             {data.map((product:ProductsType) => <div key = {product.id} className="mx-2">
 <span>{product.image}</span> 
 <span className="mx-1">{product.nameBn}</span> 
-<span>{product.today} টাকা / {product.unit}</span>
+<span>{product.today} টাকা / {product.unit} </span>
 
 <div 
                 className={`badge gap-1.5 p-1.5 font-semibold text-xs ${

@@ -8,7 +8,7 @@ const CategoriesLinks = async () => {
     return (
         <div className='flex justify-start gap-5 mt-4 mb-5'>
             {data.map((category : CategoriesType) => 
-            <Link key ={category.id} href={category.slug}>
+            <Link key ={category.id} href={`/category/${category.slug}`}>
             {category.icon}
             {category.nameBn}
             </Link>
