@@ -4,6 +4,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import Navbar from "@/Component/Navbar";
 import Footer from "@/Component/Footer";
+import Marquee from "@/Component/Marquee";
 
 const anekBangla = Anek_Bangla({
   subsets: ["latin", "bengali"],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col max-w-7xl mx-auto">
         <Navbar />
+        <Marquee />
          {children}
          <ToastContainer />
          <Footer />

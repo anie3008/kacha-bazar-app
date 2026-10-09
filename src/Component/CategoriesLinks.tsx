@@ -2,7 +2,7 @@ import Link from 'next/link';
 import  {CategoriesType}  from '@/types/types';
 
 const CategoriesLinks = async () => {
-    const response = await fetch("https://api.abcz.workers.dev/api/bazardor/categories")
+    const response = await fetch("https://api.api-store.workers.dev/api/bazardor/categories")
     const data = await response.json()
 
     return (
