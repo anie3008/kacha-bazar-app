@@ -1,4 +1,5 @@
 import {ProductsType} from '@/types/types';
+import Link from 'next/link';
 interface LowestPriceProductsProps {
     products :ProductsType[];
 }
@@ -7,7 +8,8 @@ const LowestPriceProducts = ({products}:LowestPriceProductsProps) => {
    const sortedItems = [...products].sort((a, b) => a.change.pct - b.change.pct).slice(0,6);
    
     return (
-        <div className="p-4 max-w-7xl mx-auto">
+        
+<div className="p-4 max-w-7xl mx-auto">
       
       <h1 className="text-xl md:text-2xl font-bold mb-4 flex items-center gap-1">
         <span className="text-green-600">▼</span> আজ দাম কমেছে
@@ -15,6 +17,7 @@ const LowestPriceProducts = ({products}:LowestPriceProductsProps) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {sortedItems.map((product) => (
+          <Link href={`/product/${product.id}`} key={product.id}>
           <div 
             key={product.id} 
             className="card bg-base-200 border border-base-300 shadow-sm p-4 flex flex-col justify-between gap-3"
@@ -22,7 +25,7 @@ const LowestPriceProducts = ({products}:LowestPriceProductsProps) => {
             <div className="flex justify-between items-start gap-2">
               <div className="flex items-center gap-3">
                 <div className="avatar placeholder">
-                  <div className="bg-neutral text-neutral-content rounded-xl w-12 h-12 flex items-center justify-center">
+                  <div className="bg-base-200 text-neutral-content rounded-xl w-12 h-12 flex items-center justify-center">
                     {product.image}
                   </div>
                 </div>
@@ -53,9 +56,12 @@ const LowestPriceProducts = ({products}:LowestPriceProductsProps) => {
               </div>
             </div>
           </div>
+          </Link>
         ))}
       </div>
     </div>
+        
+        
     );
 };
 

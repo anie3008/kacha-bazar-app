@@ -5,16 +5,19 @@ import LowestPriceProducts from "@/Component/LowestPriceProducts";
 
 
 
+
 export default async function Home() {
-const response = await fetch ("https://api.api-store.workers.dev/api/bazardor/products");
+const response = await fetch ("https://openapi.programming-hero.com/api/bazardor/products");
 const data = await response.json();
 
   return (
     <div className="">
       <Banner />
+     
       <HighestPriceProducts products = {data}/>
       <LowestPriceProducts products = {data}/>
       <AllProducts products = {data}/>
+      
     </div>
   );
 }

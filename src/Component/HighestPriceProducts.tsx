@@ -1,4 +1,5 @@
 import { ProductsType } from '@/types/types';
+import Link from 'next/link';
 
 interface HighestPriceProductsProps {
     products :ProductsType[];
@@ -6,9 +7,9 @@ interface HighestPriceProductsProps {
 const HighestPriceProducts = ({products}:HighestPriceProductsProps) => {
     
     const sortedItems = [...products].sort((a, b) => b.change.pct - a.change.pct).slice(0,6);
-    
+
     return (
-       <div className="p-4 max-w-7xl mx-auto">
+      <div className="p-4 max-w-7xl mx-auto">
       
       <h1 className="text-xl md:text-2xl font-bold mb-4 flex items-center gap-1">
         <span className="text-red-600">▲</span>আজ দাম বেড়েছে
@@ -16,15 +17,15 @@ const HighestPriceProducts = ({products}:HighestPriceProductsProps) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {sortedItems.map((product) => (
-          <div 
-            key={product.id} 
+          <Link href={`/product/${product.id}`} key={product.id}>
+          <div  
             className="card bg-base-200 border border-base-300 shadow-sm p-4 flex flex-col justify-between gap-3"
           >
 
             <div className="flex justify-between items-start gap-2">
               <div className="flex items-center gap-3">
                 <div className="avatar placeholder">
-                  <div className="bg-neutral text-neutral-content rounded-xl w-12 h-12 flex items-center justify-center">
+                  <div className="bg-base-200 text-neutral-content rounded-xl w-12 h-12 flex items-center justify-center">
                     {product.image}
                   </div>
                 </div>
@@ -55,9 +56,13 @@ const HighestPriceProducts = ({products}:HighestPriceProductsProps) => {
               </div>
             </div>
           </div>
+          </Link>
         ))}
       </div>
     </div>
+     
+       
+    
     );
 };
 

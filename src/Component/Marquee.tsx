@@ -3,7 +3,7 @@ import MarqueeText from "react-marquee-text"
 import "react-marquee-text/dist/styles.css"
 
 const Marquee = async() => {
-    const response = await fetch("https://api.api-store.workers.dev/api/bazardor/products")
+    const response = await fetch("https://openapi.programming-hero.com/api/bazardor/products")
     const data = await response.json();
     return (
         <div>

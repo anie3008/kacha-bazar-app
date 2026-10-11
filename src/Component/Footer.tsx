@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
     return (
         <div>
-            <footer className="footer flex flex-col sm:flex-row justify-between items-center bg-neutral text-neutral-content p-4">
+            <footer className="footer flex flex-col sm:flex-row justify-between items-center bg-base-200 text-base-500 p-4">
   <aside>
     <p className='text-sm font-extralight'> কাঁচা বাজার — প্রয়োজনীয় পণ্যের দাম এক নজরে।</p>
   </aside>

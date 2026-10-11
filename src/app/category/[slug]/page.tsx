@@ -1,43 +1,74 @@
+import SortDropdown from "@/Component/SortDropdown";
 import { ProductsType } from "@/types/types";
+import Link from "next/link";
 
 interface ProductsCategoryProps {
   params: Promise<{
     slug: string;
   }>;
+
+  searchParams: Promise<{
+    sort: string;
+  }>
 };
 
-const ProductsCategory = async ({ params }: ProductsCategoryProps) => {
+const ProductsCategory = async ({ params, searchParams }: ProductsCategoryProps) => {
   const { slug } = await params;
+  const { sort } = await searchParams;
 
-  const response = await fetch(`https://api.api-store.workers.dev/api/bazardor/categories/${slug}`)
+  const response = await fetch(`https://openapi.programming-hero.com/api/bazardor/categories/${slug}`)
   const products = await response.json();
 
-  const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products");
-  const data = await res.json();
+  const res = await fetch("https://openapi.programming-hero.com/api/bazardor/products");
+ const data = await res.json();
 
   const categoryProducts = data.filter(
     (item: ProductsType) => item.category === products.slug);
-  ;
+
+     if (sort === "lowToHigh") {
+    categoryProducts.sort((a: ProductsType, b: ProductsType) => Number(a.today) - Number(b.today));
+  } else if (sort === "highToLow") {
+    categoryProducts.sort((a: ProductsType, b: ProductsType) => Number(b.today) - Number(a.today));
+  }
+
+    
   return (
     <div>
 
-      {/* <div><h1>{categoryProducts.nameBn}</h1></div>
+             <ul className="space-y-2">
+             <li className="p-4 border rounded border-base-200 m-4 shadow-sm">
+              <div className="flex items-center gap-2">
+                {products.icon}
+              <div className=" flex flex-col items-start">
+                <span className="font-semibold">{products.nameBn}</span>
+              <span className="badge bg-base-200 text-xs px-2 py-1">
+            <p>মোট {categoryProducts.length} টি পণ্যের আজকের দাম ও পরিবর্তন</p>
 
-      <div><h1>sorting section</h1></div> */}
+          </span>
+              </div>
+              </div>
+              
+            </li>
+<ul className="space-y-2 flex justify-center sm:justify-end items-center">
+            <SortDropdown currentSort={sort} />
+</ul>
+           
+        
+        </ul>
 
       {categoryProducts.length === 0 ? (
         <p className="text-gray-500">No products found in this category.</p>
       ) :
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {categoryProducts.map((product) => (
+          {categoryProducts.map((product:ProductsType) => (
+            <Link href={`/product/${product.id}`} key={product.id}>
             <div
-              key={product.id}
               className="card bg-base-200 border border-base-300 shadow-sm p-4 flex flex-col justify-between gap-3"
             >
               <div className="flex justify-between items-start gap-2">
                 <div className="flex items-center gap-3">
                   <div className="avatar placeholder">
-                    <div className="bg-neutral text-neutral-content rounded-xl w-12 h-12 flex items-center justify-center">
+                    <div className="bg-base-200 text-neutral-content rounded-xl w-12 h-12 flex items-center justify-center">
                       {product.image}
                     </div>
                   </div>
@@ -70,6 +101,7 @@ const ProductsCategory = async ({ params }: ProductsCategoryProps) => {
                 </div>
               </div>
             </div>
+            </Link>
           ))}
         </div>
       }
