@@ -12,22 +12,22 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
     const response = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${id}`)
 
     const data = await response.json();
-    const markets = data.markets
-       
+    const markets:MarketDetails[] = data.markets
+       console.log(data,":data", markets,":markets");
     const highestPriceMarket = markets && markets.length > 0 
-        ? markets.reduce((maxMarket, currentMarket) => 
+        ? markets.reduce<MarketDetails>((maxMarket, currentMarket) => 
             currentMarket.max > maxMarket.max ? currentMarket : maxMarket, 
             markets[0]
           )
         : null;
 
         const lowestPriceMarket = markets && markets.length > 0 
-        ? markets.reduce((maxMarket, currentMarket) => 
-            currentMarket.max < maxMarket.max ? currentMarket : maxMarket, 
+        ? markets.reduce<MarketDetails>((minMarket, currentMarket) => 
+            currentMarket.max < minMarket.max ? currentMarket : minMarket, 
             markets[0]
           )
         : null;
-    console.log(markets);
+   console.log("lowest price marke:",lowestPriceMarket);
 
     return (
         <div>
@@ -83,10 +83,10 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
     <div className="border-b md:border-b-0 md:border-r border-base-content/10 pb-4 md:pb-0 md:pr-4"> 
       <p className="text-lg font-bold text-base-content/60">সর্বনিম্ন মূল্য</p> 
       <p className="text-2xl font-black text-error my-1"> 
-        {lowestPriceMarket.max} <span className="text-xs font-normal text-base-content/70">টাকা / কেজি</span> 
+        {lowestPriceMarket?.max} <span className="text-xs font-normal text-base-content/70">টাকা / কেজি</span> 
       </p> 
       <p className="text-xs text-base-content/50"> 
-        সর্বনিম্ন ছিল : {lowestPriceMarket.market} 
+        সর্বনিম্ন ছিল : {lowestPriceMarket?.market} 
       </p> 
     </div> 
 
@@ -94,10 +94,10 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
     <div className="border-b md:border-b-0 md:border-r border-base-content/10 pb-4 md:pb-0 md:px-4"> 
       <p className="text-lg font-bold text-base-content/60">সর্বোচ্চ মূল্য</p> 
       <p className="text-2xl font-black text-error my-1"> 
-        {highestPriceMarket.max} <span className="text-xs font-normal text-base-content/70">টাকা / কেজি</span> 
+        {highestPriceMarket?.max} <span className="text-xs font-normal text-base-content/70">টাকা / কেজি</span> 
       </p> 
       <p className="text-xs text-base-content/50"> 
-        সর্বনিম্ন ছিল: {highestPriceMarket.market} {highestPriceMarket.min} টাকা 
+        সর্বনিম্ন ছিল: {highestPriceMarket?.market} {highestPriceMarket?.min} টাকা 
       </p> 
     </div> 
 
@@ -105,7 +105,7 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
     <div className="md:pl-4"> 
       <p className="text-lg font-bold text-base-content/60">গড় দাম</p> 
       <p className="text-2xl font-black text-error my-1"> 
-        {(highestPriceMarket.max+lowestPriceMarket.max)/2} <span className="text-xs font-normal text-base-content/70">টাকা </span> 
+        {(Number(highestPriceMarket?.max)+Number(lowestPriceMarket?.max??0))/2} <span className="text-xs font-normal text-base-content/70">টাকা </span> 
       </p> 
       <p className="text-xs text-base-content/50"> 
         প্রতি কেজি-এর হিসাবে টাকা 
@@ -153,7 +153,7 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
                       <span className="font-semibold text-base-content">{market.min}</span>
                     </td>
                       <td>
-                      <span className="font-semibold text-base-content">{(market.min+market.max)/2}</span>
+                      <span className="font-semibold text-base-content">{(Number(market.min)+Number(market.max))/2}</span>
                     </td>
                     
                   </tr>

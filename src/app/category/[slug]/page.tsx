@@ -34,7 +34,7 @@ const ProductsCategory = async ({ params, searchParams }: ProductsCategoryProps)
     
   return (
     <div>
-
+ <div className="flex justify-center sm:justify-start  my-6"><Link href={"/"}><p>← হোম পেজে ফিরে যান</p></Link></div>
              <ul className="space-y-2">
              <li className="p-4 border rounded border-base-200 m-4 shadow-sm">
               <div className="flex items-center gap-2">
@@ -49,7 +49,8 @@ const ProductsCategory = async ({ params, searchParams }: ProductsCategoryProps)
               </div>
               
             </li>
-<ul className="space-y-2 flex justify-center sm:justify-end items-center">
+<ul className="space-y-2 flex  justify-end sm:justify-between items-center">
+ 
             <SortDropdown currentSort={sort} />
 </ul>
            
