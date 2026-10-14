@@ -1,4 +1,4 @@
-import { MarketDetails } from '@/types/types';
+import { MarketDetails, ProductsType } from '@/types/types';
 
 interface ProductDetailsPageProps {
     params: Promise<{
@@ -12,8 +12,8 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
     const response = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${id}`)
 
     const data = await response.json();
+    console.log(data,":from details page");
     const markets:MarketDetails[] = data.markets
-       console.log(data,":data", markets,":markets");
     const highestPriceMarket = markets && markets.length > 0 
         ? markets.reduce<MarketDetails>((maxMarket, currentMarket) => 
             currentMarket.max > maxMarket.max ? currentMarket : maxMarket, 
@@ -27,7 +27,6 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
             markets[0]
           )
         : null;
-   console.log("lowest price marke:",lowestPriceMarket);
 
     return (
         <div>
@@ -55,15 +54,15 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
 
         <div
           className={`badge gap-1 p-2.5 font-semibold text-xs ${
-            data.change.dir === 'up'
+            data.change?.dir === 'up'
               ? 'badge-error bg-red-100 text-red-700'
-              : data.change.dir === 'down'
+              : data.change?.dir === 'down'
               ? 'badge-success bg-green-100 text-green-700'
               : 'badge-neutral bg-base-300 text-base-content'
           }`}
         >
-          {data.change.dir !== 'flat' && (data.change.dir === 'up' ? '▲ ' : '▼ ')}
-          {data.change.pct}%
+          {data.change?.dir !== 'flat' && (data.change?.dir === 'up' ? '▲ ' : '▼ ')}
+          {data.change?.pct}%
         </div>
       </div>
     </li>
@@ -135,7 +134,8 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
               </tr>
             </thead>
             <tbody>
-              {markets.map((market:MarketDetails, idx:number) => {
+              
+              {(markets??[]).map ((market:MarketDetails, idx:number) => {
                 return (
                   <tr key={idx} className={`bg-red-50/30 `}>
                     <td className="text-center font-medium text-base-content/50">{idx + 1}</td>

@@ -1,27 +1,82 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { Button, Description, FieldError, Fieldset, Form, Input, Label, TextField } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Bounce, toast } from "react-toastify";
 
 
 const SignUpPage = () => {
-   const router = useRouter(); 
- const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+   const [isLoading, setIsLoading] = useState(false); 
+const router = useRouter();
+const { data: session, isPending: isSessionLoading } = authClient.useSession()
+
+ const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+
     const formData = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
-    // Convert FormData to plain object
-    formData.forEach((value, key) => {
-      data[key] = value.toString();
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+
+    const {data, error} = await authClient.signUp.email({
+      email,
+      password,
+      name,
+      callbackURL: "/"
     });
-    router.push("/")
-    // alert(`Form submitted with: ${JSON.stringify(data, null, 2)}`);
-  };
+    console.log(data,"from sign up page");
+    setIsLoading(false);
+    
+    if(error){
+               toast.error('অ্যাকাউন্ট তৈরি করতে ব্যর্থ হয়েছে।', {
+position: "top-center",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: false,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "light",
+transition: Bounce,
+})
+} else{
+  toast.success(`অভিনন্দন,অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!`, {
+position: "top-center",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: false,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "light",
+transition: Bounce,
+});
+ router.push("/");
+};
+    }
+   if (isSessionLoading) {
+    return <div className="text-center p-6">লোডিং...</div>;
+  }
+    
 
     return (
         <div className="flex flex-col items-center justify-center rounded-3xl bg-surface p-6">
-    <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
+
+{session ?(<div className="text-center flex flex-col gap-4">
+          <h2 className="text-xl font-bold text-green-600">আপনি ইতিমধ্যেই সাইন ইন করেছেন!</h2>
+          <p className="gap-1.5">স্বাগতম, {session.user.name}</p>
+          <Link href="/">
+            <Button className="bg-green-600 text-white">ড্যাশবোর্ড / হোম পেজে যান</Button>
+          </Link>
+        </div>
+
+):(
+ <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
         <Fieldset.Legend>অ্যাকাউন্ট তৈরি করুন</Fieldset.Legend>
             <Description>বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।</Description>
 
@@ -85,7 +140,7 @@ const SignUpPage = () => {
 
 
       <div >
-        <Button type="submit" className="w-full bg-green-600">
+        <Button type="submit" isPending={isLoading} className="w-full bg-green-600">
          অ্যাকাউন্ট তৈরি করুন
         </Button>
        
@@ -104,6 +159,9 @@ const SignUpPage = () => {
         <Link href={"sign-in"}><p className="text-green-500"> সাইন ইন করুন</p></Link>
         </div>
     </Form>
+)}
+
+   
   <div><Link href={"/"}><p>← হোম পেজে ফিরে যান</p></Link></div>
         </div>
     );
