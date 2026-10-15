@@ -1,4 +1,5 @@
 import { ProductsType } from "@/types/types";
+import { notFound } from "next/navigation";
 import MarqueeText from "react-marquee-text"
 import "react-marquee-text/dist/styles.css"
 
