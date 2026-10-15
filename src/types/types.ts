@@ -19,7 +19,7 @@ export interface ProductsType {
     yesterday: number;
     lastWeek: number;
     lastMonth: number;
-    change?: {
+    change: {
         dir: string; 
         pct: number;
     };

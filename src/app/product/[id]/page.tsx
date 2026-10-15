@@ -45,7 +45,7 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
 
       <div className="flex flex-col items-center">
         <p>আজকের দাম</p>
-        {/* OPTIMIZATION: Replaced <h1> with a styled <span> or <strong> for better SEO structure */}
+      
         <span className="text-xl font-bold">
           {data.today}
         </span>
@@ -53,31 +53,30 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
 
         <div
           className={`badge gap-1 p-2.5 font-semibold text-xs ${
-            data.change?.dir === 'up'
+            data.change.dir === 'up'
               ? 'badge-error bg-red-100 text-red-700'
-              : data.change?.dir === 'down'
+              : data.change.dir === 'down'
               ? 'badge-success bg-green-100 text-green-700'
               : 'badge-neutral bg-base-300 text-base-content'
           }`}
         >
-          {data.change?.dir !== 'flat' && (data.change?.dir === 'up' ? '▲ ' : '▼ ')}
-          {data.change?.pct}%
+          {data.change.dir !== 'flat' && (data.change.dir === 'up' ? '▲ ' : '▼ ')}
+          {data.change.pct}%
         </div>
       </div>
     </li>
   </ul>
 </div>
-{/* table section start here */}
+
 
 <div>
      <div className="w-full max-w-4xl mx-auto p-4">
   {/* শিরোনাম */}
   <h1 className="text-xl font-bold mb-6 text-left">দামের সারসংক্ষেপ</h1> 
   
-  {/* রেসপনসিভ গ্রিড কন্টেইনার */}
+  
   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left"> 
     
-    {/* সর্বনিম্ন মূল্য */}
     <div className="border-b md:border-b-0 md:border-r border-base-content/10 pb-4 md:pb-0 md:pr-4"> 
       <p className="text-lg font-bold text-base-content/60">সর্বনিম্ন মূল্য</p> 
       <p className="text-2xl font-black text-error my-1"> 
@@ -88,7 +87,6 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
       </p> 
     </div> 
 
-    {/* সর্বোচ্চ মূল্য */}
     <div className="border-b md:border-b-0 md:border-r border-base-content/10 pb-4 md:pb-0 md:px-4"> 
       <p className="text-lg font-bold text-base-content/60">সর্বোচ্চ মূল্য</p> 
       <p className="text-2xl font-black text-error my-1"> 
@@ -99,7 +97,7 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
       </p> 
     </div> 
 
-    {/* গড় দাম */}
+
     <div className="md:pl-4"> 
       <p className="text-lg font-bold text-base-content/60">গড় দাম</p> 
       <p className="text-2xl font-black text-error my-1"> 
