@@ -29,7 +29,6 @@ const { data: session, isPending: isSessionLoading } = authClient.useSession()
       name,
       callbackURL: "/"
     });
-    console.log(data,"from sign up page");
     setIsLoading(false);
     
     if(error){
@@ -58,11 +57,22 @@ transition: Bounce,
 });
  router.push("/");
 };
-    }
+}
+const handleGoogleSignUp = async () => {
+  const data = await authClient.signIn.social({
+    provider: "google",
+  });
+};
+const handleGithubSignUp = async () => {
+  const data = await authClient.signIn.social({
+    provider: "github",
+  });
+};
+    
    if (isSessionLoading) {
     return <div className="text-center p-6">লোডিং...</div>;
-  }
-    
+  };
+  
 
     return (
         <div className="flex flex-col items-center justify-center rounded-3xl bg-surface p-6">
@@ -147,10 +157,10 @@ transition: Bounce,
       </div>
       <hr className="my-3.5"/>
       <div className="flex items-center  justify-around gap-2">
-        <Button type="button" className="w-m bg-green-600">
+        <Button onClick={handleGoogleSignUp} type="button" className="w-md bg-green-600">
           Google দিয়ে চালিয়ে যান
         </Button>
-        <Button type="button" className="bg-base-300 text-black">
+        <Button onClick={handleGithubSignUp}  type="button" className="bg-base-300 text-black">
           GitHub দিয়ে চালিয়ে যান
         </Button>
       </div>

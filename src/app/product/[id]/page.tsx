@@ -12,7 +12,6 @@ const ProductDetailsPage = async ({ params }: ProductDetailsPageProps) => {
     const response = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${id}`)
 
     const data = await response.json();
-    console.log(data,":from details page");
     const markets:MarketDetails[] = data.markets
     const highestPriceMarket = markets && markets.length > 0 
         ? markets.reduce<MarketDetails>((maxMarket, currentMarket) => 

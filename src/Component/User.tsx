@@ -15,7 +15,11 @@ if(isPending) return <div>Loading...</div>
             
            <div>
              <button onClick={()=> authClient.signOut()} className="btn  btn-xs bg-[#228b22] text-white border-2 rounded-md p-3 sm:btn-sm md:btn-md lg:btn-lg"> সাইন আউট</button>
-              <button onClick={()=> authClient.signOut()} className="btn  btn-xs border-2 border-[#228b22] rounded-md p-3 sm:btn-sm md:btn-md lg:btn-lg"> সাইন আউট</button>
+
+             <Link href={"my-profile"}>
+<button className="btn  btn-xs border-[#228b22] border-2 rounded-md p-3 sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl"> আমার প্রোফাইল </button>
+    </Link>
+              
            </div>
             
             </div>):(
@@ -25,8 +29,9 @@ if(isPending) return <div>Loading...</div>
      <button className="btn btn-xs rounded-md p-3 border-2 border-[#b0fcb0] sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl"> সাইন আপ </button>
     </Link>
     
-    <Link href={"my-profile"}>
-<button className="btn  btn-xs bg-[#228b22] text-white border-2 rounded-md p-3 sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl"> আমার প্রোফাইল </button>
+
+    <Link href={"sign-in"}>
+    <button className="btn  btn-xs border-2 bg-[#228b22] text-white *:rounded-md p-3 sm:btn-sm md:btn-md lg:btn-lg"> সাইন ইন</button>
     </Link>
           </div>
             )}
