@@ -16,7 +16,7 @@ const User = () => {
                 <div>
                     <button onClick={() => authClient.signOut()} className="btn  btn-xs bg-[#228b22] text-white border-2 rounded-md p-3 sm:btn-sm md:btn-md lg:btn-lg"> সাইন আউট</button>
 
-                    <Link href={"my-profile"}>
+                    <Link href={"/my-profile"}>
                         <button className="btn  btn-xs border-[#228b22] border-2 rounded-md p-3 sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl"> আমার প্রোফাইল </button>
                     </Link>
 

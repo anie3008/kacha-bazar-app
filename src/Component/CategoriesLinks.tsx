@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { CategoriesType } from '@/types/types';
 import { notFound } from 'next/navigation';
 import NavLink from './NavLink';

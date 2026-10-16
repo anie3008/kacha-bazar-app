@@ -151,7 +151,7 @@ const handleGithubSignUp = async () => {
       </div>
       <div className="flex items-center justify-center my-3 gap-2 ">
         <p>অ্যাকাউন্ট নেই?</p>
-        <Link href={"sign-up"}><p className="text-green-500"> সাইন আপ করুন</p></Link>
+        <Link href={"/sign-up"}><p className="text-green-500"> সাইন আপ করুন</p></Link>
         </div>
     </Form>
       )}
